@@ -908,6 +908,7 @@ def create_openai_api_server():
         default=False,
         help="Enable SSL. Requires OS Environment variables 'SSL_KEYFILE' and 'SSL_CERTFILE'.",
     )
+    parser.add_argument("--debug", type=str, default="INFO", help="log level")
     args = parser.parse_args()
 
     app.add_middleware(
@@ -920,6 +921,7 @@ def create_openai_api_server():
     app_settings.controller_address = args.controller_address
     app_settings.api_keys = args.api_keys
 
+    logger.setLevel(args.debug)
     logger.info(f"args: {args}")
     return args
 

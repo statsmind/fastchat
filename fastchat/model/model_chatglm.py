@@ -83,14 +83,13 @@ def generate_stream_chatglm(
     if "peft" in model_type:
         model_type = str(type(model.base_model.model)).lower()
 
-    # if "chatglm3" in model_type:
-    #     message_list = recover_message_list(prompt)
-    #     inputs = tokenizer.build_chat_input(
-    #         query=message_list[-1]["content"], history=message_list[:-1], role="user"
-    #     ).to(model.device)
-    # else:
-    #     inputs = tokenizer([prompt], return_tensors="pt").to(model.device)
-    inputs = tokenizer([prompt], return_tensors="pt").to(model.device)
+    if "chatglm3" in model_type:
+        message_list = recover_message_list(prompt)
+        inputs = tokenizer.build_chat_input(
+            query=message_list[-1]["content"], history=message_list[:-1], role="user"
+        ).to(model.device)
+    else:
+        inputs = tokenizer([prompt], return_tensors="pt").to(model.device)
     input_echo_len = len(inputs["input_ids"][0])
 
     gen_kwargs = {

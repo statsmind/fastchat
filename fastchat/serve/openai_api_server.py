@@ -360,7 +360,9 @@ async def get_gen_params(
 
     gen_params["stop"] = list(new_stop)
 
-    logger.debug(f"==== request ====\n{json.dumps(gen_params, indent=2)}")
+    logger.debug(f"==== request ====\n{gen_params}")
+    if 'prompt' in gen_params:
+        logger.debug(f"==== prompt ====\n{gen_params['prompt']}")
     return gen_params
 
 
